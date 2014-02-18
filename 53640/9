@@ -1,0 +1,15 @@
+SCRIPTS=/home/ivn/scripts/
+from=/home/ivn/Загрузки/
+to=/home/ivn/Видео/
+ext[0]=".avi"
+ext[1]=".mkv"
+ext[2]=".srt"
+ext[3]=".wmv"
+
+for ((i=0; i<${#ext[*]}; i++)); do 
+  reg=$from"*"${ext[$i]}
+  echo $reg
+  ls "$reg" | cat  | while read LINE; do echo $i; done
+done
+
+#ls ~/scripts/*.sh | cat  | while read LINE; do echo $LINE; done

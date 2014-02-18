@@ -1,0 +1,127 @@
+# http://ru.festivalspeaker.wikia.com
+SCRIPTS=/home/ivn/scripts/
+play /home/ivn/scripts/beep.wav
+
+stime_H=12 #$(date +%H)
+
+
+stime_M=$(date +%M)
+
+
+case "$stime_H" in
+  
+  "01" | "02" | "03" | "04" )
+  DAYTIME="н+очи"
+  ;;
+"05" | "06" | "07" | "08" | "09" | "10" | "11" | "12"  )
+  DAYTIME="утр+а"
+  ;;
+  "13" | "14" | "15" | "16" | "17" )
+  DAYTIME="дня"
+  ;;
+  
+  "18" | "19" | "20" | "21" | "22" | "23" | "24" | "0" | "00" )
+  DAYTIME="вечера"
+  ;;
+esac
+
+
+
+
+let "stime_H= stime_H % 12"
+#let "stime_M= stime_M - stime_M%5"
+
+if (( $stime_H == 0 )) ; then
+    stime_H=12   
+fi
+
+    
+case "$stime_M" in
+
+  "00" | "0" )
+
+      if (( $stime_H == 01 )) ; then
+	TEXT="час"
+
+      else
+	TEXT="$(${SCRIPTS}number_case.php male ${stime_H} ) \
+	  $(${SCRIPTS}pluralform.sh ${stime_H} час час+а час+ов)"
+      fi
+	TEXT="${TEXT} $DAYTIME"
+    
+    ;;   
+    "45" )
+    
+    let "stime_H= stime_H + 1"
+    let "stime_H= stime_H % 12"
+    if (( $stime_H == 01 )) ; then
+	TEXT="без четверти час"
+
+      else
+    TEXT="без четверти $(${SCRIPTS}number_case.php male ${stime_H} )"
+    fi
+    ;;
+    "30" )
+    
+    let "stime_H= stime_H + 1"
+    TEXT="половина"
+    TEXT="${TEXT} $(${SCRIPTS}caseform.sh ${stime_H})"
+    ;;
+    "15" )
+    
+    let "stime_H= stime_H + 1"
+    TEXT="пятнадцать минут"
+    TEXT="${TEXT} $(${SCRIPTS}caseform.sh ${stime_H})"
+    ;;
+    * )
+    
+    if (( $stime_M > 30 )) ; then
+	let "stime_H= stime_H + 1"      
+    fi
+    
+    if (( $stime_H == 13 )) ; then
+	stime_H=1
+	if (($DAYTIME == "вечера")) ; then
+	    DAYTIME="ночи"
+	else #(($DAYTIME == "утра"))
+	    DAYTIME="дня"
+	fi
+    fi
+    
+    
+    if (( $stime_H == 01 )) ; then
+	TEXT="примерно час"
+
+      else
+	TEXT="примерно $(${SCRIPTS}number_case.php male ${stime_H} ) \
+	  $(${SCRIPTS}pluralform.sh ${stime_H} час час+а час+ов)"
+      fi
+	TEXT="${TEXT} $DAYTIME"
+    
+    ;;
+    esac
+    
+
+#{parameter//pattern/string}
+b=${TEXT//+/}
+b=${b//              / }
+b=${b//             / }
+b=${b//            / }
+b=${b//           / }
+b=${b//          / }
+b=${b//         / }
+b=${b//        / }
+b=${b//       / }
+b=${b//      / }
+b=${b//     / }
+b=${b//    / }
+b=${b//   / }
+b=${b//  / }
+b=${b//  / }
+b=${b//  / }
+b=${b//  / }
+b=${b//,/ }
+
+notify-send -u low -t 10 -i "/home/ivn/Загрузки/KFaenzafordark/apps/48/time-admin2.png" -a Timenow "Часовщик" "$b"  
+
+${SCRIPTS}saytext_ru.sh "$TEXT"

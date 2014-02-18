@@ -1,0 +1,99 @@
+# http://ru.festivalspeaker.wikia.com
+SCRIPTS=/home/ivn/scripts/
+
+#stime_H=$(date +%H)
+stime_H=7
+
+stime_M=$(date +%M)
+
+echo $stime_H
+echo $stime_M
+
+case "$stime_H" in
+  
+ "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12"  )
+  DAYTIME="утр+а"
+  ;;
+  "13" | "14" | "15" | "16" | "17" )
+  DAYTIME="дня"
+  ;;
+  #"(( $stime_H >= 18  && $stime_H<= 23 ))" | "0" )
+  "18" | "19" | "20" | "21" | "22" | "23" | "0" )
+  DAYTIME="вечера"
+  ;;
+  "1" | "2" | "3" | "4" )
+  DAYTIME="н+очи"
+  ;;
+esac
+
+
+if (( $stime_H >= 12 )) ; then
+    let "stime_H= stime_H - 12"      
+fi
+if (( $stime_H == 0 )) ; then
+    stime_H=12   
+fi
+#let "stime_M= stime_M - stime_M%5"
+
+# case "$stime_H" in
+#   
+#   "0"  )
+# 	TIME="Двенадцать"
+#   ;;
+#   "1" )
+# 	TIME="Час"
+#   ;;
+#    "2" )
+# 	TIME="Два"
+#   ;;
+#    "3" )
+# 	TIME=""
+#   ;;
+#   "4" )
+# 	TIME="Двенадцать"
+#   ;;
+#   "5" )
+# 	TIME="Двенадцать"
+#   ;;
+#   "6" )
+# 	TIME="Двенадцать"
+#   ;;
+#   "7" )
+# 	TIME="Двенадцать"
+#   ;;
+#   "8" )
+# 	TIME="Двенадцать"
+#   ;;
+#   "9" )
+# 	TIME="Двенадцать"
+#   ;;
+#   "10" )
+# 	TIME="Двенадцать"
+#   ;;
+#   "11" )
+# 	TIME="Двенадцать"
+#   ;;
+#   "" )
+# 	TIME="Двенадцать"
+#   ;;
+# esac
+
+
+
+TEXT="$(${SCRIPTS}number_case.php male ${stime_H} ) \
+      $(${SCRIPTS}pluralform.sh ${stime_H} час час+а час+ов)"
+echo "$TEXT"
+
+TEXT="${TEXT} $DAYTIME"
+
+echo "$TEXT"
+#{parameter//pattern/string}
+b=${TEXT//+/}
+b=${b//    / }
+b=${b//   / }
+b=${b//  / }
+b=${b//,/ }
+
+notify-send -u low -t 10 -i "/home/ivn/Загрузки/KFaenzafordark/apps/48/time-admin2.png" -a Timenow "Часовщик" "$b"  
+
+${SCRIPTS}saytext_ru.sh "$TEXT"

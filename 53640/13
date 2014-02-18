@@ -1,0 +1,77 @@
+# http://ru.festivalspeaker.wikia.com
+SCRIPTS=/home/ivn/scripts/
+
+stime_H=$(date +%H)
+
+stime_M=$(date +%M)
+
+case "$stime_H" in
+  
+  [5-12]  )
+  
+  DAYTIME="утра"
+  ;;
+  [13-17]  )
+  
+  DAYTIME="дня"
+  ;;
+  [18-0]  )
+  
+  DAYTIME="вечера"
+  ;;
+  [1-4]  )
+  
+  DAYTIME="ночи"
+  ;;
+esac
+
+if [$stime_H -gt 12]; then
+    stime_H= $($stime_H - 12)    
+fi
+
+echo "$DAYTIME"
+stime_M-= $stime_M%5
+echo "$stime_M"
+
+case "$stime_M" in
+  
+  [0-12]  )
+  
+  DAYTIME="утра"
+  ;;
+  [13-17]  )
+  
+  DAYTIME="дня"
+  ;;
+  [18-0]  )
+  
+  DAYTIME="вечера"
+  ;;
+  [1-4]  )
+  
+  DAYTIME="ночи"
+  ;;
+esac
+
+# 
+# TEXT="Время $(${SCRIPTS}number_case.php male ${stime_H} ) \
+#       $(${SCRIPTS}pluralform.sh ${stime_H} час час+а час+ов)"
+# echo "$TEXT"
+# if [ ${stime_M} -eq 0 ] ; then
+#  TEXT="${TEXT} ровно"
+# else
+#  TEXT="${TEXT} $(${SCRIPTS}number_case.php female ${stime_M} ) \
+#       $(${SCRIPTS}pluralform.sh ${stime_M} минута минуты минут),"
+# fi
+# 
+# echo "$TEXT"
+# #{parameter//pattern/string}
+# b=${TEXT//+/}
+# b=${b//    / }
+# b=${b//   / }
+# b=${b//  / }
+# b=${b//,/ }
+# 
+# notify-send -u low -t 10 -i "/home/ivn/Загрузки/KFaenzafordark/apps/48/time-admin2.png" -a Timenow "Часовщик" "$b"  
+# 
+# ${SCRIPTS}saytext_ru.sh "$TEXT"

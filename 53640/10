@@ -1,0 +1,16 @@
+# http://ru.festivalspeaker.wikia.com
+SCRIPTS=/home/ivn/scripts/
+
+stime_H=$(date +%H)
+stime_M=$(date +%M)
+TEXT="Время $(${SCRIPTS}number_case.php male ${stime_H} ) \
+      $(${SCRIPTS}pluralform.sh ${stime_H} час час+а час+ов)"
+if [ ${stime_M} -eq 0 ] ; then
+ TEXT="${TEXT} ровно"
+else
+ TEXT="${TEXT} $(${SCRIPTS}number_case.php female ${stime_M} ) \
+      $(${SCRIPTS}pluralform.sh ${stime_M} минута минуты минут),"
+fi
+
+echo $TEXT
+${SCRIPTS}saytext_ru.sh "$TEXT"
