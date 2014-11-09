@@ -1,0 +1,18 @@
+#device  0: /home/ivn/scripts/trackpoint/trackpoint-event: Lenovo ThinkPad Compact USB Keyboard with TrackPoint
+#Display name: :0
+
+#Window "(null)": # Window title
+# Window "(null)": # Resource name
+# Window "(null)": # Class name
+"Lenovo ThinkPad Compact USB Keyboard with TrackPoint" "/home/ivn/scripts/trackpoint/trackpoint-event" none key/272 "Xkey/Control_L"
+
+#Window "(null)": # Window title
+# Window "(null)": # Resource name
+# Window "(null)": # Class name
+"Lenovo ThinkPad Compact USB Keyboard with TrackPoint" "/home/ivn/scripts/trackpoint/trackpoint-event" none key/274 "Xkey/Super_R"
+
+#Window "(null)": # Window title
+# Window "(null)": # Resource name
+# Window "(null)": # Class name
+"Lenovo ThinkPad Compact USB Keyboard with TrackPoint" "/home/ivn/scripts/trackpoint/trackpoint-event" none key/273 "Xkey/Alt_L"
+
